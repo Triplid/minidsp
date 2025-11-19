@@ -1,30 +1,11 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:14.0.0
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.19
 FROM ${BUILD_FROM}
 
-# Устанавливаем Python, venv и bash
-RUN apk add --no-cache python3 py3-virtualenv bash
+RUN apk add --no-cache python3 py3-pip \
+    && python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --no-cache-dir flask gunicorn
 
-# Создаём виртуальное окружение
-RUN python3 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Копируем requirements и устанавливаем в venv
-COPY requirements.txt /tmp/requirements.txt
-RUN /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt
-
-# Копируем Python API и скрипт запуска
 COPY api.py /app/api.py
-COPY etc/cont-init.d/run.sh /etc/cont-init.d/run.sh
-
-# Делаем скрипт исполняемым
-RUN chmod a+x /etc/cont-init.d/run.sh
-
 WORKDIR /app
-EXPOSE 8080
 
-# Копируем скрипт
-COPY etc/cont-init.d/run.sh /etc/cont-init.d/run.sh
-RUN chmod a+x /etc/cont-init.d/run.sh
-
-# Эта строка очень важна для новых base-image!
-COPY etc/services.d/ /etc/services.d/
+COPY rootfs/ /
