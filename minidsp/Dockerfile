@@ -22,4 +22,9 @@ RUN chmod a+x /etc/cont-init.d/run.sh
 WORKDIR /app
 EXPOSE 8080
 
-# ⚠️ CMD/ENTRYPOINT не используем — s6-overlay управляет PID=1
+# Копируем скрипт
+COPY etc/cont-init.d/run.sh /etc/cont-init.d/run.sh
+RUN chmod a+x /etc/cont-init.d/run.sh
+
+# Эта строка очень важна для новых base-image!
+COPY etc/services.d/ /etc/services.d/
