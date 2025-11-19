@@ -1,0 +1,15 @@
+name: "miniDSP 2x4HD Controller"
+version: "1.0.0"
+slug: "minidsp"
+description: "Test miniDSP addon"
+url: "https://github.com/Triplid/minidsp"
+startup: "services"
+boot: "auto"
+arch:
+  - aarch64
+  - armv7
+  - amd64
+  - i386
+host_network: false
+options: {}
+schema: {}
