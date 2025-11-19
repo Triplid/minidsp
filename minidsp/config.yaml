@@ -1,17 +1,16 @@
-name: "miniDSP 2x4HD Controller"
-version: "1.0.0"
-slug: "minidsp"
-description: "Control miniDSP 2x4HD via USB (HID) using Python API"
-startup: "services"
-boot: "auto"
+name: "miniDSP 2x4HD (рабочий 2025)"
+slug: "minidsp_2x4hd"
+description: "Управление miniDSP 2x4 HD (пресеты + источник)"
+version: "2025.11.19"
 arch:
   - aarch64
   - armv7
   - amd64
   - i386
+startup: application
+boot: auto
+ports:
+  8080/tcp: 8080
 host_network: false
-host_hardware: true
 options: {}
 schema: {}
-ports:
-  "8080": 8080
